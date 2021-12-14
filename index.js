@@ -1,18 +1,25 @@
 const express = require('express');
 const app = express();
-const axios = require('axios')
-
-app.use(express.json());
-app.use(express.urlencoded({
-  extended: true
-}));
+const axios = require('axios');
+const { Telegraf } = require('telegraf');
 
 
+const bot  = new Telegraf("5029976610:AAGryrgdI3KqXn7-zfWlEO1-B5PioOoG2ek")
+console.log(bot)
+bot.use(Telegraf.log())
 
-// app.use('/api', adressRouter);
-// app.use('/api', userRouter);
 
- (async ()=> {
+bot.start((ctx) => {
+  ctx.reply('Welcome')
+})
+bot.on("text", async ctx => {
+  let some = await smth()
+  console.log(some)
+  ctx.reply(some)
+})
+
+
+ async function smth(){
       try {
         let options={
           method:"GET",
@@ -24,10 +31,18 @@ app.use(express.urlencoded({
         let data = await axios.request(options)
           sec = new Date().getMinutes();
         console.log(await JSON.stringify(data.data))
+        dataStringify  = await JSON.stringify(data.data);
+        return dataStringify
       } catch (error) {
         console.log(error)
       }
+ }
+ (async () =>{
+  bot.telegram.sendMessage(-1001600875495, await smth())
  })()
 
+ bot.launch()
 
-app.listen(3000, ()=> console.log(`started`));
+
+
+app.listen(3000, ()=>console.log())

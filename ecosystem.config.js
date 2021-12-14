@@ -3,6 +3,6 @@ module.exports = {
     name   : "app1",
     script : "./index.js",
     watch: true,
-    cron_restart : "* * * * *"
+    cron_restart : "0 * * * *"
   }]
 }
