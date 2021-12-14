@@ -12,6 +12,10 @@ bot.use(Telegraf.log())
 bot.start((ctx) => {
   ctx.reply('Welcome')
 })
+
+
+
+
 bot.on("text", async ctx => {
   let data = await getData()
   ctx.reply(data)
