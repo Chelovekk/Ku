@@ -1,7 +1,14 @@
 const express = require('express');
 const axios = require('axios');
 const { Telegraf } = require('telegraf');
-require('dotenv').config()
+const dsBot = require('./discord_bot/discord')
+
+
+dsBot.client.login(process.env.DISCORD_BOT_TOKEN)
+
+
+
+
 
 const app = express();
 const bot  = new Telegraf(process.env.TG_TOKEN)
@@ -20,7 +27,6 @@ bot.on("text", async ctx => {
   let data = await getData()
   ctx.reply(data)
 })
-
 
 
  async function getData(){
