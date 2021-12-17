@@ -3,11 +3,7 @@ const axios = require('axios');
 const { Telegraf } = require('telegraf');
 const dsBot = require('./discord_bot/discord')
 
-
 dsBot.client.login(process.env.DISCORD_BOT_TOKEN)
-
-
-
 
 
 const app = express();
@@ -19,8 +15,6 @@ bot.use(Telegraf.log())
 bot.start((ctx) => {
   ctx.reply('Welcome')
 })
-
-
 
 
 bot.on("text", async ctx => {

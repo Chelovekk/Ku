@@ -1,30 +1,41 @@
 require('dotenv').config()
-const { Client, Intents } = require('discord.js');
+const Discord = require('discord.js');
+
 const  axios = require('axios');
 
 class DsBot{
         constructor(){
-        this.client = new Client({ intents: [Intents.FLAGS.GUILDS] });
-        this.client.once('ready',() => {
-            console.log("started")
+            
+        this.client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.DIRECT_MESSAGES, Discord.Intents.FLAGS.GUILD_PRESENCES]});
+        
+        this.client.once('ready', async (message) => {
+            let channel = await this.client.channels.cache.get('920657637257932842').send('frfr')
         }); 
         this.client.on('interactionCreate', async interaction => {
+            console.log('ferf')
             if (!interaction.isCommand()) return;
         
             const { commandName } = interaction;
         
-            if (commandName === 'ping') {
+            if (commandName === 'data') {
                 let f = await this.getData();
-                await interaction.reply({content:f.substr(0,2000)});
+                await interaction.reply(f.substr(0,2000));
             } else if (commandName === 'server') {
                 await interaction.reply('Server info.');
             } else if (commandName === 'user') {
                 await interaction.reply('User info.');
             }
+        });     
+        this.client.on("messageCreate", async message=>{
+            if (message.content === 'ping') {
+                await message.channel.send('pong');
+                const channel = await this.client.guilds.cache.get('920657636809138197');
+                await channel.setName('BlaBla')
+              }
+         
         });
-       
-          
-    }
+    }  
+    
      async getData(){
         try {
           let options={
@@ -42,23 +53,5 @@ class DsBot{
    }
     
 }
-// const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
-// client.once('ready', () => {
-// 	console.log('Ready!');
-// }); 
 
-// client.on('interactionCreate', async interaction => {
-// 	if (!interaction.isCommand()) return;
-
-// 	const { commandName } = interaction;
-
-// 	if (commandName === 'ping') {
-// 		await interaction.reply('Pong!');
-// 	} else if (commandName === 'server') {
-// 		await interaction.reply('Server info.');
-// 	} else if (commandName === 'user') {
-// 		await interaction.reply('User info.');
-// 	}
-// });
 module.exports = new DsBot()
-

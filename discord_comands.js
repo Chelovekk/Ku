@@ -3,9 +3,10 @@ const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 require('dotenv').config()
 const commands = [
-	new SlashCommandBuilder().setName('getData').setDescription('sendData!'),
-	// new SlashCommandBuilder().setName('server').setDescription('Replies with server info!'),
-	// new SlashCommandBuilder().setName('user').setDescription('Replies with user info!'),
+	new SlashCommandBuilder().setName('data').setDescription('Replies with data!'),
+	new SlashCommandBuilder().setName('test').setDescription('Replies with server test!'),
+	new SlashCommandBuilder().setName('user').setDescription('Replies with user info!'),
+
 ]
 	.map(command => command.toJSON());
 
