@@ -17,7 +17,7 @@ const rest = new REST({ version: '9' }).setToken("");
     console.log('Started refreshing application (/) commands.');
 
     await rest.put(
-        Routes.applicationGuildCommands(920656127321047070, 920657636809138197),
+        Routes.applicationGuildCommands(process.env.DISCORD_CLIENT_ID, process.env.DISCORD_TEXT_CHANNEL_ID),
         { body: commands },
     );
 
