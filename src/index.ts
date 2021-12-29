@@ -5,6 +5,7 @@ import express from 'express';
 import {Weather_data} from "./models/weather_data";
 import {RequestData} from "./Request/Request";
 import {OpenweatherData} from "./Request/Request.interface";
+const db  = require("./models/index")
 dotenv.config();
 
 
