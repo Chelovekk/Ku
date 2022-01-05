@@ -10,11 +10,17 @@ import {
 } from "sequelize-typescript";
 import {Users} from "./users";
 import {Cities} from "./cities";
+
+interface UserCitiesAttributes{
+    user_id: number,
+    city_id: number
+}
+
 @Table({
     tableName: 'users_cities',
     timestamps: false
 })
-export class Users_cities extends Model {
+export class Users_cities extends Model<UserCitiesAttributes> implements UserCitiesAttributes{
 
     @PrimaryKey
     @AutoIncrement
