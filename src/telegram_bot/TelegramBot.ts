@@ -68,7 +68,7 @@ export class TelegramBot implements TelegramBotInterface{
     addNewCityCommandListener(){
         this.bot.command("add", async (ctx) => {
             try {
-                const userId = ctx.update.message.from.id;
+                const userId: string = ctx.update.message.from.id as string;
                 const newCity = ctx.update.message.text.split(' ')[1].toLowerCase();
                 const cityExist = await new RequestData().getCityExistingStatus(newCity);
 
@@ -83,13 +83,13 @@ export class TelegramBot implements TelegramBotInterface{
                  const user = await Users.findOne({
                     where: {
                         user_type: 'telegram_user',
-                        messenger_id: userId
+                        messenger_id: userId!
                     },
 
                 })
 
                 await Users_cities.create({
-                    user_id: user?.id,
+                    user_id: user?.id!,//!?
                     city_id: city[0].id
                 },{
                     ignoreDuplicates: true

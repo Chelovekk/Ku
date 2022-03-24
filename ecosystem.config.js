@@ -1,8 +1,14 @@
-module.exports = {
-  apps : [{
+const cwd = './src/dist';
+
+
+const  apps =  [{
     name   : "app1",
-    script : "./dist/index.js",
+    cwd: cwd,
+    script : "index.js",
     watch: true,
     cron_restart : "* * * * *"
   }]
+
+module.exports = {
+  apps
 }

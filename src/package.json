@@ -5,7 +5,9 @@
   "main": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index"
+    "start": "nodemon index",
+    "build": "tsc",
+    "sequelize:db-migrate": "yarn ts-node ./node_modules/.bin/sequelize-cli db:migrate"
   },
   "repository": {
     "type": "git",
