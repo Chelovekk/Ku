@@ -68,7 +68,7 @@ export class TelegramBot implements TelegramBotInterface{
     addNewCityCommandListener(){
         this.bot.command("add", async (ctx) => {
             try {
-                const userId: string = ctx.update.message.from.id as string;
+                const userId = ctx.update.message.from.id;
                 const newCity = ctx.update.message.text.split(' ')[1].toLowerCase();
                 const cityExist = await new RequestData().getCityExistingStatus(newCity);
 

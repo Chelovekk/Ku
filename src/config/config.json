@@ -1,24 +1,26 @@
 {
   "development": {
-    "username": "root",
-    "password": "fizmat",
+    "username": "user",
+    "password": "password",
     "database": "api_database",
     "host": "localhost",
     "dialect": "mysql",
     "logging": false
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username": "user",
+    "password": "password",
+    "database": "api_database",
+    "host": "localhost",
+    "dialect": "mysql",
+    "logging": false
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username": "user",
+    "password": "password",
+    "database": "api_database",
+    "host": "localhost",
+    "dialect": "mysql",
+    "logging": false
   }
 }
