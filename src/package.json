@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index",
     "build": "tsc",
+    "postbuild": "cpy --cwd=. --parents config dist/src && cpy --cwd=. --parents .env dist/src",
     "sequelize:db-migrate": "yarn ts-node ./node_modules/.bin/sequelize-cli db:migrate"
   },
   "repository": {
@@ -43,6 +44,7 @@
     "@types/node": "^17.0.4",
     "@types/validator": "^13.7.0",
     "sequelize-cli": "^6.3.0",
-    "ts-node": "^10.4.0"
+    "ts-node": "^10.4.0",
+    "cpy-cli": "^3.1.1"
   }
 }

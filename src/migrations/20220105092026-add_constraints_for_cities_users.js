@@ -2,14 +2,14 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    queryInterface.removeConstraint('Users', 'constr_mess_id',);
-    queryInterface.addConstraint('Users',
-        {
-      fields:['messenger_id', 'user_type'],
-      type: 'unique',
-      name: 'pair_unique_constraint'
-        });
-    queryInterface.addConstraint('Cities',
+    // queryInterface.removeConstraint('users', 'constr_mess_id',);
+    // queryInterface.addConstraint('users',
+    //     {
+    //   fields:['messenger_id', 'user_type'],
+    //   type: 'unique',
+    //   name: 'pair_unique_constraint'
+    //     });
+    queryInterface.addConstraint('cities',
         {
           fields: ['city_name'],
           type: 'unique',

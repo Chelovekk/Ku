@@ -1,4 +1,4 @@
-const cwd = './src/dist';
+const cwd = './src/dist/src';
 
 
 const  apps =  [{

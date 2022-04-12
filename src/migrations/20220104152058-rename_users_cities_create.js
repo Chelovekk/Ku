@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    queryInterface.renameTable('Users_cities_create', 'users_cities')
+    queryInterface.renameTable('users_cities_create', 'users_cities')
 
   },
 
