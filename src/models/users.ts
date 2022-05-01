@@ -1,9 +1,20 @@
 'use strict';
-import {Column, Model, Table, DataType, AllowNull, PrimaryKey, AutoIncrement, BelongsToMany} from "sequelize-typescript";
+import {
+    Column,
+    Model,
+    Table,
+    DataType,
+    AllowNull,
+    PrimaryKey,
+    AutoIncrement,
+    BelongsToMany,
+    HasOne
+} from "sequelize-typescript";
 import {Cities} from "./cities";
 import {Users_cities} from "./users_cities";
+import {BilingsData} from "./biling_data";
 
-interface UserAttributes{
+interface UserAttributes {
     user_type: string,
     messenger_id: number
 }
@@ -11,10 +22,12 @@ interface UserAttributes{
 @Table({
     tableName: 'users'
 })
-export class Users extends Model<UserAttributes> implements UserAttributes{
-    @BelongsToMany(()=>Cities, ()=>Users_cities)
+export class Users extends Model<UserAttributes> implements UserAttributes {
+    @BelongsToMany(() => Cities, () => Users_cities)
     cities!: Cities[]
 
+    @HasOne(() => BilingsData)
+    billingData: BilingsData;
 
     @PrimaryKey
     @AutoIncrement
@@ -26,7 +39,7 @@ export class Users extends Model<UserAttributes> implements UserAttributes{
 
     @AllowNull(false)
     @Column({
-            type: DataType.ENUM('discord_user', 'telegram_user')
+        type: DataType.ENUM('discord_user', 'telegram_user')
     })
     user_type!: string;
 
@@ -35,4 +48,10 @@ export class Users extends Model<UserAttributes> implements UserAttributes{
         type: DataType.INTEGER
     })
     messenger_id!: number;
+
+    @AllowNull(true)
+    @Column({
+        type: DataType.INTEGER.UNSIGNED
+    })
+    billingsDataId!: number
 };

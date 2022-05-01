@@ -11,7 +11,7 @@ import {
 } from "sequelize-typescript";
 import {Cities} from "./cities";
 
-interface CityWeatherAttributes{
+interface CityWeatherAttributes {
     id?: number,
     city_id: number,
     temp: number,
@@ -23,7 +23,7 @@ interface CityWeatherAttributes{
 @Table({
     tableName: 'city_weather_data'
 })
-export class City_weather_data extends Model<CityWeatherAttributes> implements CityWeatherAttributes{
+export class City_weather_data extends Model<CityWeatherAttributes> implements CityWeatherAttributes {
     @PrimaryKey
     @AutoIncrement
     @AllowNull(false)
@@ -34,7 +34,7 @@ export class City_weather_data extends Model<CityWeatherAttributes> implements C
 
 
     @AllowNull(false)
-    @ForeignKey(()=>Cities)
+    @ForeignKey(() => Cities)
     @Column({
         type: DataType.INTEGER
     })

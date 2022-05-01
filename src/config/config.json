@@ -2,7 +2,7 @@
   "development": {
     "username": "user",
     "password": "password",
-    "database": "api_database",
+    "database": "test",
     "host": "localhost",
     "dialect": "mysql",
     "logging": false
@@ -10,7 +10,7 @@
   "test": {
     "username": "user",
     "password": "password",
-    "database": "api_database",
+    "database": "test",
     "host": "localhost",
     "dialect": "mysql",
     "logging": false
@@ -18,7 +18,7 @@
   "production": {
     "username": "user",
     "password": "password",
-    "database": "api_database",
+    "database": "test",
     "host": "localhost",
     "dialect": "mysql",
     "logging": false
