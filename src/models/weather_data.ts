@@ -1,6 +1,6 @@
 'use strict';
 import {Column, Model, Table, DataType, AllowNull, PrimaryKey, AutoIncrement} from "sequelize-typescript";
-import {OpenweatherData} from "../Request/Request.interface";
+import {OpenweatherData} from "../services/openweather/Request.interface";
 
 interface WeatherDataAttributes extends OpenweatherData {
   id? : number

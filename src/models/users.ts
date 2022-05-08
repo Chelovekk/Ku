@@ -27,7 +27,7 @@ export class Users extends Model<UserAttributes> implements UserAttributes {
     cities!: Cities[]
 
     @HasOne(() => BilingsData)
-    billingData: BilingsData;
+    billingData!: BilingsData;
 
     @PrimaryKey
     @AutoIncrement

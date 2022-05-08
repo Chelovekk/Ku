@@ -2,7 +2,6 @@ import dotenv from "dotenv";
 dotenv.config()
 import { Sequelize } from "sequelize-typescript";
 
-console.log(3874892347398)
 export const sequelize = new Sequelize({
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,

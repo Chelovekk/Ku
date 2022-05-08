@@ -1,7 +1,7 @@
 import Discord, {Client, Message, TextChannel} from "discord.js";
 import { DiscordBotInterface } from "./DiscordBotInterface";
-import { RequestData } from "../Request/Request";
-import { OpenweatherData } from "../Request/Request.interface";
+import { RequestData } from "../services/openweather/Request";
+import { OpenweatherData } from "../services/openweather/Request.interface";
 
 const intents = [
     Discord.Intents.FLAGS.GUILDS,

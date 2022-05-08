@@ -20,6 +20,8 @@ interface IEnv {
     TG_TOKEN: string;
     TG_GROUP_ID: string;
 
+    REPOSITORY_ROOT_PATH:string,
+
     DB_HOST: string;
     DB_PORT: string;
     DB_USERNAME: string;
@@ -32,8 +34,8 @@ interface IEnv {
     REDIS_DB: number;
     REDIS: {
         KEY: {
-            TELEGRAM_CANCEL_NOTIFICATIONS: string;
-            OPENSEA_COLLECTIONS_SLUGS: string;
+            SUBSCRIPTION_CANCEL_NOTIFICATIONS: string;
+            STATISTIC_UPDATE_NOTIFICATIONS: string;
             COLLECTIONS_TEMP: string;
         },
     };
@@ -75,6 +77,8 @@ const env: IEnv = {
     TG_TOKEN: assignEnv('TG_TOKEN'),
     TG_GROUP_ID: assignEnv('TG_GROUP_ID'),
 
+    REPOSITORY_ROOT_PATH: assignEnv('REPOSITORY_ROOT_PATH'),
+
     DB_HOST: assignEnv('DB_HOST'),
     DB_PORT: assignEnv('DB_PORT'),
     DB_USERNAME: assignEnv('DB_USERNAME'),
@@ -86,8 +90,8 @@ const env: IEnv = {
     REDIS_DB: +assignEnvOptional<number>('REDIS_DB', 0),
     REDIS: {
         KEY: {
-            TELEGRAM_CANCEL_NOTIFICATIONS: 'telegram:subscription:cancel',
-            OPENSEA_COLLECTIONS_SLUGS: 'telegram:',
+            SUBSCRIPTION_CANCEL_NOTIFICATIONS: 'subscription:cancel',
+            STATISTIC_UPDATE_NOTIFICATIONS: 'statistic:update',
             COLLECTIONS_TEMP: ''
         },
     },

@@ -23,7 +23,7 @@ export class BilingsData extends Model {
     @AutoIncrement
     @AllowNull(false)
     @Column({
-        type: DataType.INTEGER
+        type: DataType.INTEGER.UNSIGNED
     })
     id!: number;
 
@@ -41,7 +41,7 @@ export class BilingsData extends Model {
 
     @AllowNull(true)
     @Column({
-        type: DataType.DATE
+        type: DataType.BIGINT
     })
     billings_period_end!: Date;
 

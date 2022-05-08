@@ -1,15 +1,15 @@
 import {TelegramBotInterface} from "./telegram.interface";
 import {Context, Markup, Telegraf} from "telegraf";
-import {RequestData} from "../Request/Request";
-import {OpenWeatherCityData, OpenweatherData} from "../Request/Request.interface";
-import {Users} from "../models/users";
-import {Cities} from "../models/cities";
-import {Users_cities} from "../models/users_cities";
+import {RequestData} from "../openweather/Request";
+import {OpenWeatherCityData, OpenweatherData} from "../openweather/Request.interface";
+import {Users} from "../../models/users";
+import {Cities} from "../../models/cities";
+import {Users_cities} from "../../models/users_cities";
 
-import {City_weather_data} from "../models/city_weather_data";
+import {City_weather_data} from "../../models/city_weather_data";
 import Stripe from 'stripe';
-import env from "../constants/env";
-import {BilingsData} from "../models/biling_data";
+import env from "../../constants/env";
+import {BilingsData} from "../../models/biling_data";
 
 const stripe = new Stripe(env.STRIPE_SECRET_KEY, {apiVersion: '2020-08-27'});
 
@@ -21,11 +21,40 @@ export class TelegramBot implements TelegramBotInterface {
     // stripe: Stripe = new Stripe.Stripe(process.env.STRIPE_SECRET_KEY)
 
     constructor() {
-        this.startSendData();
+        this.addMiddlewares();
         this.addStartListener();
+        this.addTextListener();
         this.addNewCityCommandListener();
         this.addListCommandListener();
-        this.addDeleteListener();
+    }
+
+    addMiddlewares(): void {
+        this.bot.use(async (ctx, next) => {
+
+            if (!ctx.chat) {
+                (ctx as any).middlewareError = 'Cant find you'
+                return await next()
+            }
+            const user = await Users.findOne({
+                where: {
+                    messenger_id: ctx.chat!.id
+                },
+                include: [
+                    {
+                        model: BilingsData
+                    }
+                ]
+            })
+            if (!user) {
+                (ctx as any).middlewareError = 'Cant find you'
+                return await next();
+            }
+            if (user.billingData && !user.billingData.billings_period_end || !user.billingData) {
+                (ctx as any).middlewareError = 'you havent subscription or you billings period end';
+                return next();
+            }
+            return await next()
+        })
     }
 
     addStartListener(): void {
@@ -35,15 +64,13 @@ export class TelegramBot implements TelegramBotInterface {
             const user = await Users.findOrCreate({
                 where: {
                     user_type: "telegram_user",
-                    messenger_id: ctx.chat.id
+                    messenger_id: ctx.chat!.id
                 },
                 include: [{
                     model: BilingsData
                 }]
             })
-            // if (user[0].billingDataId && user[0].billingData.billings_period_end) {
-            //     ctx.reply(``)
-            // }
+
             const paymentLink = await stripe.paymentLinks.create({
                 line_items: [
                     {
@@ -65,13 +92,13 @@ export class TelegramBot implements TelegramBotInterface {
                 }
             })
 
-            await ctx.reply(`Welcome, you can use your free-trial to choose your first city for saving statistic, using this link: `,
+            await ctx.reply(`Welcome, you can use your free-trial to choose your first city for saving statistic, using this link: ${paymentLink.url}`,
                 Markup.keyboard(
                     [
-                        Markup.button.url("Create subscription", paymentLink.url),
-                        `show smth`],
+                        Markup.button.url("My info", paymentLink.url),
+                        `Show my cities`, 'get statistic'],
                     {
-                        wrap: (btn, index, currentRow) => currentRow.length >= 5
+                        wrap: (btn, index, currentRow) => currentRow.length >= 2
                     }
                 ).resize()
             );
@@ -79,8 +106,9 @@ export class TelegramBot implements TelegramBotInterface {
     }
 
     addTextListener(): void {
-        this.bot.on("text", async (ctx) => {
-            // console.log(ctx)
+        this.bot.on('text', async (ctx) => {
+            if (!(await this.middlwareChecking(ctx))) return;
+
             const data: OpenweatherData | undefined = await new RequestData().getWeatherData();
             await ctx.reply(await new RequestData().createSendingData(data!));
         });
@@ -104,6 +132,7 @@ export class TelegramBot implements TelegramBotInterface {
                 feels_like: cityWeatherData.main.feels_like,
                 city_id: city.id
             })
+            console.log('sending')
 
             for (const user of city.users) {
                 const replyData: string = await new RequestData().cityWeatherDataFormat(cityWeatherData, city.city_name) as unknown as string;
@@ -204,8 +233,14 @@ export class TelegramBot implements TelegramBotInterface {
         })
     }
 
-    addDeleteListener() {
-
+    async middlwareChecking(ctx: Context): Promise<boolean> {
+        console.log('checking')
+        if ((ctx as any).middlewareError) {
+            console.log((ctx as any).middlewareError)
+            await ctx.reply((ctx as any).middlewareError)
+            return false
+        }
+        return true
     }
 
 }
