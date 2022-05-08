@@ -23,7 +23,6 @@ app.use(bodyParser.json({
 }));
 
 app.use('/api/payments', paymentsRouter);
-app.use('/api/', ()=>{})
 
 
 logger.debug('Started', app)

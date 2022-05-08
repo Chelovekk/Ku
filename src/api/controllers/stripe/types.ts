@@ -1,4 +1,4 @@
-import {IsNumberString, IsString, ValidateNested} from "class-validator";
+import {IsNumber, IsNumberString, IsString, ValidateNested} from "class-validator";
 import {Type} from "class-transformer";
 
 class ReqBodyMetadata {
@@ -32,4 +32,21 @@ export class ReqBody{
     @ValidateNested()
     @Type(()=>ReqBodyData)
     data!:ReqBodyData;
+}
+
+
+class Subscription{
+    @IsString()
+    subscription!: string;
+
+    @IsNumber()
+    current_period_end!: number;
+}
+export class ReqBodySubscriptionUpdated{
+    @IsString()
+    type!:string;
+
+    @ValidateNested()
+    @Type(()=>Subscription)
+    data!:Subscription;
 }

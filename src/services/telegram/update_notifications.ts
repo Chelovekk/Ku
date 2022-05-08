@@ -38,15 +38,18 @@ export class SendNotifications {
                         model: City_weather_data
                     }]
                 },
-                // {
-                //     model: BilingsData,
-                //     required:true,
-                //     where:{
-                //         subscriptionId:{
-                //             [Op.ne]:null
-                //         }
-                //     }
-                // }
+                {
+                    model: BilingsData,
+                    required:true,
+                    where:{
+                        subscriptionId:{
+                            [Op.ne]:null
+                        },
+                        billings_period_end:{
+                            [Op.gte]: (new Date).getDate()
+                        }
+                    }
+                }
             ]
         })
         console.log(users)

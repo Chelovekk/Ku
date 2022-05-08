@@ -43,7 +43,7 @@ export class BilingsData extends Model {
     @Column({
         type: DataType.BIGINT
     })
-    billings_period_end!: Date;
+    billings_period_end!: number;
 
     @AllowNull(false)
     @ForeignKey(()=>Users)

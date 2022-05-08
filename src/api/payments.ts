@@ -3,6 +3,7 @@ import StripeWebhookController from "./controllers/stripe/web-hooks";
 
 const paymentsRouter = express.Router();
 
-paymentsRouter.post("/stripe/webhook", StripeWebhookController.handle);
+paymentsRouter.post("/checkout-webhook", StripeWebhookController.handleCheckout);
+paymentsRouter.post("/subscription-update", StripeWebhookController.handleSubscriptionUpdated);
 
 export default paymentsRouter;

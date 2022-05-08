@@ -10,7 +10,7 @@ import {Users} from "./models/users";
         try {
             const sendNotifications = new SendNotifications(Logger);
             await sendNotifications.handle()
-            await delay(1000)
+            await delay(5000)
         } catch (e) {
             console.log(e)
             await Logger.logException(e, '[SendNotifications]: Failed')

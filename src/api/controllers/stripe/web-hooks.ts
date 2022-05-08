@@ -1,15 +1,13 @@
 import {Request, Response} from 'express';
 import {transformAndValidate} from "class-transformer-validator";
-import {IsNotEmpty, IsNumberString, IsString, ValidateNested,} from "class-validator";
 import '../../../models/index'
-import {Type} from "class-transformer";
 import {stripe} from "../../../index";
 import {BilingsData} from "../../../models/biling_data";
 import {Users} from "../../../models/users";
 import Logger from "../../../utils/logger";
 import {Telegraf} from "telegraf";
 import env from "../../../constants/env";
-import {ReqBody} from "./types";
+import {ReqBody, ReqBodySubscriptionUpdated} from "./types";
 
 interface IReqBody {
     type: string;
@@ -26,13 +24,8 @@ interface IReqBody {
     }
 }
 
-class ReqBodyMetadata {
-    @IsNumberString()
-    telegramId!: string;
-}
-
 export default class StripeWebhookController {
-    static async handle(req: Request<IReqBody, {}, {}, {}>, res: Response, next: (arg0: any) => void) {
+    static async handleCheckout(req: Request<IReqBody, {}, {}, {}>, res: Response, next: (arg0: any) => void) {
         try {
             const reqBody = await transformAndValidate(ReqBody, req.body)
             const {metadata, customer, payment_link, subscription} = reqBody.data.object
@@ -62,6 +55,24 @@ export default class StripeWebhookController {
         } catch (e) {
             Logger.logException(e, '[Web-hook, checkout.session.complete]', {body: req.body})
             res.status(500).end();
+        }
+    }
+
+    static async handleSubscriptionUpdated(req: Request<IReqBody, {}, {}, {}>, res: Response, next: (arg0: any) => void) {
+        try{
+            const reqBody = await transformAndValidate(ReqBodySubscriptionUpdated, req.body)
+            const billingsData = await BilingsData.findOne({
+                where: {
+                    subscriptionId: reqBody.data.subscription,
+                }
+            })
+            if (!billingsData) throw ''
+            billingsData!.billings_period_end = reqBody.data.current_period_end;
+            await billingsData?.save()
+            res.status(200).end();
+        } catch (e){
+            Logger.logException(e, 'Cannot_find_billings_data')
+            return res.status(500).end();
         }
     }
 }
