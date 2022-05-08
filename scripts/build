@@ -1,0 +1,10 @@
+#!/bin/bash
+full_path=$(realpath "$0")
+dir_path=$(dirname "$full_path")
+parent_dir=$(dirname "$dir_path")
+backend_dir="$parent_dir/src"
+
+
+#yarn --cwd "$parent_dir/nametag-sdk" install  --frozen-lockfile && yarn --cwd "$parent_dir/nametag-sdk" build  || exit
+yarn --cwd "$backend_dir" install  --frozen-lockfile && yarn --cwd "$backend_dir" build || exit
+cd $parent_dir

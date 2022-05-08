@@ -1,0 +1,8 @@
+#!/bin/bash
+full_path=$(realpath "$0")
+dir_path=$(dirname "$full_path")
+parent_dir=$(dirname "$dir_path")
+backend_dir="$parent_dir/src"
+
+yarn --cwd "$backend_dir" sequelize:db-migrate || exit
+cd $parent_dir

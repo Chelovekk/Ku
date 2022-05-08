@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/exchanger.iml" filepath="$PROJECT_DIR$/.idea/exchanger.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/exchangerd.iml" filepath="$PROJECT_DIR$/.idea/exchangerd.iml" />
     </modules>
   </component>
 </project>
